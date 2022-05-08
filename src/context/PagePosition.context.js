@@ -27,32 +27,20 @@
 
 // export default PagePositionContextWrapper;
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import constate from 'constate';
 
-const from = () => {
-  const [pagePos, setPagePos] = useState(0);
-  const onClickNextPage = () => setPagePos(prv => prv + 1);
-  const onClickPreviousPage = () => setPagePos(prv => prv - 1);
+export const [PagePositionContextProvider, usePagePositionCtx] = constate(
+  () => {
+    const [pagePos, setPagePos] = useState(0);
+    const onClickNextPage = useCallback(() => setPagePos(x => x + 1), []);
+    const onClickPreviousPage = useCallback(() => setPagePos(x => x - 1), []);
 
-  return {
-    pagePos,
-    setPagePos,
-    onClickNextPage,
-    onClickPreviousPage
-  };
-};
-
-export const [
-  PagePositionContextProvider,
-  useGetPagePos,
-  useSetPagePos,
-  useOnClickNextPage,
-  useOnClickPreviousPage
-] = constate(
-  from,
-  from => from.pagePos,
-  from => from.setPagePos,
-  from => from.onClickNextPage,
-  from => from.onClickPreviousPage
+    return {
+      pagePos,
+      setPagePos,
+      onClickNextPage,
+      onClickPreviousPage
+    };
+  }
 );

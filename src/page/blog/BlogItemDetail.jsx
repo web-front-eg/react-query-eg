@@ -1,19 +1,26 @@
-import PropTypes from 'prop-types';
+// ui component
 import Button from '../../component/ui/Button';
 
-const BlogItemDetail = ({ selectedPost: { title, body } }) => {
+// state
+import { useSelectedPostCtx } from '../../context/SelectedPost.context';
+
+const BlogItemDetail = () => {
+  const { selectedPost } = useSelectedPostCtx();
+  if (!selectedPost) return null;
+
+  const { title, userId, body } = selectedPost;
+  console.log('title: ', title);
+  console.log('userId: ', userId);
+  console.log('body: ', body);
+
   return (
     <>
+      <p>User ID: {userId}</p>
       <h3 className='text-blue-400'>{title}</h3>
-      <Button onClick={}/>
+      <p>{body}</p>
+      <Button />
     </>
   );
-};
-
-BlogItemDetail.propTypes = {
-  author: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  contents: PropTypes.string.isRequired
 };
 
 export default BlogItemDetail;

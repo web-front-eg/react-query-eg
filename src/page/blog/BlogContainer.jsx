@@ -1,5 +1,3 @@
-import useQuery from 'react-query';
-
 // page
 import Layout from '../layout/Layout';
 import BlogList from './BlogList';
@@ -9,27 +7,22 @@ import BlogItemDetail from './BlogItemDetail';
 import BlogTitle from './BlogTitle';
 
 // state
-import { PagePositionContextProvider } from '../../context/PagePosition.context';
-import {
-  SelectPostContextProvider,
-  useGetSelectedPost
-} from '../../context/SelectedPost.context';
+// import { PagePositionContextProvider } from '../../context/PagePosition.context';
+import { SelectPostContextProvider } from '../../context/SelectedPost.context';
 
 const BlogContainer = () => {
-  const selectedPost = useGetSelectedPost();
-
   return (
-    <PagePositionContextProvider>
+    <div>
+      <BlogTitle />
+
       <SelectPostContextProvider>
-        <div>
-          <BlogTitle />
-          <Layout>
-            <BlogList />
-          </Layout>
-          {selectedPost && <BlogItemDetail selectedPost={selectedPost} />}
-        </div>
+        <Layout>
+          <BlogList />
+        </Layout>
+
+        {<BlogItemDetail />}
       </SelectPostContextProvider>
-    </PagePositionContextProvider>
+    </div>
   );
 };
 
