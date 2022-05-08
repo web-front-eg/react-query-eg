@@ -1,23 +1,21 @@
+import PropTypes from 'prop-types';
+
 // ui component
 import Button from '../../../component/ui/Button';
 
-// state
-import { useSelectedPostCtx } from '../../../state/client/context/SelectedPost.context';
-
 import { lg } from '../../../dbg/dbg';
-import { useCommentsCtx } from '../../../state/client/context/Comments.context';
-import { usePostsQuery } from '../../../state/network/usePostsQuery';
 
 import BlogItemComments from './BlogItemComments';
 
-const BlogItemDetail = () => {
-  const { selectedPost } = useSelectedPostCtx();
+const BlogItemDetail = ({
+  selectedPost,
+  onClick_updateTitle,
+  onClick_deletePost,
+  comments
+}) => {
   if (!selectedPost) {
     return null;
   }
-
-  const { onClick_updateTitle, onClick_deletePost } = usePostsQuery();
-  const { comments } = useCommentsCtx();
 
   const { title, body } = selectedPost;
   // prettyPrintSelectedPost(selectedPost);
@@ -40,6 +38,24 @@ const BlogItemDetail = () => {
       <BlogItemComments comments={comments} />
     </div>
   );
+};
+
+BlogItemDetail.propTypes = {
+  selectedPost: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired
+  }),
+
+  onClick_updateTitle: PropTypes.func,
+  onClick_deletePost: PropTypes.func,
+
+  comments: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      email: PropTypes.string.isRequired,
+      body: PropTypes.string.isRequired
+    })
+  )
 };
 
 export default BlogItemDetail;

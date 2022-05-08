@@ -1,8 +1,11 @@
 import BlogContainer from './page/blog/BlogContainer';
+import { SelectPostContextProvider } from './state/client/context/SelectedPost.context';
 
 const Root = () => (
   <div>
-    <BlogContainer />
+    <SelectPostContextProvider>
+      <BlogContainer />
+    </SelectPostContextProvider>
   </div>
 );
 
