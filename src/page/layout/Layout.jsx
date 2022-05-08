@@ -1,16 +1,19 @@
-import Footer from '../footer/Footer';
-import Separator from '../../component/ui/Separator';
+//#region imports
+// sys
 import PropTypes from 'prop-types';
 
-const Layout = ({ children }) => {
-  return (
-    <div>
-      <div>{children}</div>
-      <Footer />
-      <Separator additionalStyle='my-3' />
-    </div>
-  );
-};
+// ui
+import Footer from '../footer/Footer';
+import Separator from '../../component/ui/Separator';
+//#endregion imports
+
+const Layout = ({ children }) => (
+  <>
+    <div>{children}</div>
+    <Footer />
+    <Separator additionalStyle='my-3' />
+  </>
+);
 
 Layout.propTypes = {
   children: PropTypes.node

@@ -10,7 +10,6 @@ export const DUMMY_BLOG_ITEMS = [
   },
   {
     id: 3,
-    content:
-      'Id pariatur in fugiat consectetur elit do consequat est qui nulla sint officia do officia.'
+    content: 'Id pariatur in fugiat consectetur elit do consequat est qui nulla sint officia do officia.'
   }
 ];

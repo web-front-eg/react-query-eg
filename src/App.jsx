@@ -12,9 +12,7 @@ const GET_dummy = async () => {
   //   console.log(hello);
   // }
 
-  const response = await fetch(
-    'https://api.github.com/repos/tannerlinsley/react-query'
-  );
+  const response = await fetch('https://api.github.com/repos/tannerlinsley/react-query');
 
   if (!response.ok) {
     throw new Error('404');
@@ -57,8 +55,7 @@ const App = () => {
   if (error) return 'An error has occurred: ' + error.message;
   if (!data) return null;
 
-  const { name, description, subscibers_count, stargazers_count, forks_count } =
-    data;
+  const { name, description, subscibers_count, stargazers_count, forks_count } = data;
 
   return (
     <div className='px-3 py-2 h-screen w-screen'>

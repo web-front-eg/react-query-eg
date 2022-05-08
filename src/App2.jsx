@@ -11,9 +11,7 @@ const GET_dummy = async ({ queryKey }) => {
   console.log('hello: ', hello);
   console.log('page: ', page);
 
-  const response = await fetch(
-    'https://api.github.com/repos/tannerlinsley/react-query'
-  );
+  const response = await fetch('https://api.github.com/repos/tannerlinsley/react-query');
 
   if (!response.ok) {
     throw new Error('404');
@@ -23,31 +21,27 @@ const GET_dummy = async ({ queryKey }) => {
 };
 
 const App2 = () => {
-  const { isLoading, error, data } = useQuery(
-    ['repoData', { hello: 'hellooo', page: 0 }],
-    GET_dummy,
-    {
-      // https://react-query.tanstack.com/guides/disabling-queries
+  const { isLoading, error, data } = useQuery(['repoData', { hello: 'hellooo', page: 0 }], GET_dummy, {
+    // https://react-query.tanstack.com/guides/disabling-queries
+    //
+    enabled: true,
+    // auto-retry on failure!
+    // https://react-query.tanstack.com/guides/query-retries
+    retry: 3,
+    // auto-retry delay (not recommended)
+    // https://react-query.tanstack.com/guides/query-retries
+    retryDelay: 1000, // 1s
+    //  as we query for the other data, we are in need of keeping data somewhere,
+    //  because success and loading states transitioned and it leads to the new request -> destroy the last one
+    //
+    // The data from the last successful fetch available while new data is being requested, even though the query key has changed,
+    // and as the new data arrives, the previous data is seamlessly swapped to show the new data.
+    // by setting the flag of 'keepPreviousData' to true
+    keepPreviousData: true,
+    initialData: {
       //
-      enabled: true,
-      // auto-retry on failure!
-      // https://react-query.tanstack.com/guides/query-retries
-      retry: 3,
-      // auto-retry delay (not recommended)
-      // https://react-query.tanstack.com/guides/query-retries
-      retryDelay: 1000, // 1s
-      //  as we query for the other data, we are in need of keeping data somewhere,
-      //  because success and loading states transitioned and it leads to the new request -> destroy the last one
-      //
-      // The data from the last successful fetch available while new data is being requested, even though the query key has changed,
-      // and as the new data arrives, the previous data is seamlessly swapped to show the new data.
-      // by setting the flag of 'keepPreviousData' to true
-      keepPreviousData: true,
-      initialData: {
-        //
-      }
     }
-  );
+  });
 
   // useMutation -> performing post/put/patch by react-query
   // https://jforj.tistory.com/244
@@ -61,8 +55,7 @@ const App2 = () => {
   if (error) return 'An error has occurred: ' + error.message;
   // if (!data) return null;
 
-  const { name, description, subscibers_count, stargazers_count, forks_count } =
-    data;
+  const { name, description, subscibers_count, stargazers_count, forks_count } = data;
 
   return (
     <div className='px-3 py-2 h-screen w-screen'>

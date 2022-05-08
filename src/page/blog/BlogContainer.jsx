@@ -1,29 +1,31 @@
+//#region imports
 // page
 import Layout from '../layout/Layout';
-import BlogList from './BlogList';
-import BlogItemDetail from './BlogItemDetail';
+import BlogList from './list/BlogList';
+import BlogItemDetail from './item/BlogItemDetail';
 
 // style
-import BlogTitle from './BlogTitle';
+import BlogTitle from './list/BlogTitle';
 
 // state
-// import { PagePositionContextProvider } from '../../context/PagePosition.context';
-import { SelectPostContextProvider } from '../../context/SelectedPost.context';
+import { SelectPostContextProvider } from '../../state/client/context/SelectedPost.context';
+import { CommentsContextProvider } from '../../state/client/context/Comments.context';
+//#endregion imports
 
-const BlogContainer = () => {
-  return (
-    <div>
-      <BlogTitle />
+const BlogContainer = () => (
+  <>
+    <BlogTitle />
 
-      <SelectPostContextProvider>
-        <Layout>
-          <BlogList />
-        </Layout>
+    <SelectPostContextProvider>
+      <Layout>
+        <BlogList />
+      </Layout>
 
-        {<BlogItemDetail />}
-      </SelectPostContextProvider>
-    </div>
-  );
-};
+      <CommentsContextProvider>
+        <BlogItemDetail />
+      </CommentsContextProvider>
+    </SelectPostContextProvider>
+  </>
+);
 
 export default BlogContainer;

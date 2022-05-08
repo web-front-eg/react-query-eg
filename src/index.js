@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom/client';
 // import App2 from './App2';
 import Root from './Root';
 
-import WrapReactQueryClientProvider from './WebAPI';
+import WrapReactQueryClientProvider from './state/network';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
