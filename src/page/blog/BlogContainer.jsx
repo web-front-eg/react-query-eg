@@ -16,7 +16,7 @@ import { useCommentsQuery } from '../../state/network/useCommentsQuery';
 const BlogContainer = () => {
   const { selectedPost } = useSelectedPostCtx();
   const { onClick_updateTitle, onClick_deletePost } = usePostsQuery();
-  const { comments } = useCommentsQuery();
+  const { comments } = useCommentsQuery(selectedPost?.id);
 
   const itemDetailJSX = selectedPost && (
     <BlogItemDetail

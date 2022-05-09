@@ -1,23 +1,14 @@
 import PropTypes from 'prop-types';
+import BlogItemCommentItem from './BlogItemCommentItem';
 
-const BlogItemComments = ({ comments }) => {
-  if (!comments) {
-    return null;
-  }
-
-  return (
-    <ul>
-      {comments.map(comment => {
-        const { id, email, body } = comment;
-        return (
-          <li key={id}>
-            {email}: {body}
-          </li>
-        );
-      })}
-    </ul>
-  );
-};
+const BlogItemComments = ({ comments }) => (
+  <ul className='mt-10'>
+    {comments &&
+      comments.map(comment => (
+        <BlogItemCommentItem key={comment.id} comment={comment} />
+      ))}
+  </ul>
+);
 
 BlogItemComments.propTypes = {
   comments: PropTypes.arrayOf(
@@ -25,7 +16,7 @@ BlogItemComments.propTypes = {
       id: PropTypes.number.isRequired,
       email: PropTypes.string.isRequired,
       body: PropTypes.string.isRequired
-    })
+    }).isRequired
   )
 };
 
