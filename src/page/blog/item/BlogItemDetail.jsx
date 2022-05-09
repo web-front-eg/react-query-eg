@@ -6,16 +6,16 @@ import Button from '../../../component/ui/Button';
 import { lg } from '../../../dbg/dbg';
 
 import BlogItemComments from './BlogItemComments';
-import { useCommentsQuery } from '../../../state/network/useCommentsQuery';
+import { useCommentsFetch } from '../../../state/network/fetch/useCommentsFetch';
 import StdError from '../../../component/ui/StdError';
 import StdLoading from '../../../component/ui/StdLoading';
 
 const BlogItemDetail = ({
-  selectedPost
-  // onClick_updateTitle,
-  // onClick_deletePost
+  selectedPost,
+  updatePostTitleMutate,
+  deletePostMutate
 }) => {
-  const { comments, isLoading, isError, error } = useCommentsQuery(selectedPost?.id);
+  const { comments, isLoading, isError, error } = useCommentsFetch(selectedPost?.id);
 
   if (!selectedPost) {
     return null;
@@ -36,17 +36,50 @@ const BlogItemDetail = ({
       <p className='text-lg mb-12'>{body}</p>
 
       {/* delete, update  */}
-      <div className='flex flex-row'>
-        <Button text='Delete' additionalStyle='mr-3' />
-        <Button text='Update Title' />
+      <div>
+        <div className='mb-2'>
+          <Button
+            text='Delete'
+            additionalStyle='mr-3'
+            onClick={() => deletePostMutate.mutate(selectedPost?.id)}
+          />
+          <div className='mt-2'>
+            {deletePostMutate.isError && (
+              <p className='text-red-500'>Error from Delete!</p>
+            )}
+            {deletePostMutate.isLoading && (
+              <p className='text-purple-500'>Loading for Deletion!</p>
+            )}
+            {deletePostMutate.isSuccess && (
+              <p className='text-green-500'>Deleting Post was successful!</p>
+            )}
+          </div>
+        </div>
+        <div className='flex flex-row'>
+          <Button
+            text='Update Title'
+            onClick={() =>
+              updatePostTitleMutate.mutate(selectedPost?.id, 'updated name !!!!')
+            }
+          />
+          <div className='mt-2'>
+            {updatePostTitleMutate.isError && (
+              <p className='text-red-500'>Error from Delete!</p>
+            )}
+            {updatePostTitleMutate.isLoading && (
+              <p className='text-purple-500'>Loading for Deletion!</p>
+            )}
+            {updatePostTitleMutate.isSuccess && (
+              <p className='text-green-500'>Deleting Post was successful!</p>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* comments */}
       <BlogItemComments comments={comments} />
     </div>
   );
-  // onClick = { onClick_deletePost }
-  //onClick={onClick_updateTitle}
 };
 
 BlogItemDetail.propTypes = {

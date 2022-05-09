@@ -2,21 +2,21 @@
 
 // state
 import { useSelectedPostCtx } from '../../../state/client/context/SelectedPost.context';
-import { usePostsQuery } from '../../../state/network/usePostsQuery';
+import { usePostsFetch } from '../../../state/network/fetch/usePostsFetch';
 
 // component
 import StdLoading from '../../../component/ui/StdLoading';
 import StdError from '../../../component/ui/StdError';
 import BlogItem from '../item/BlogItem';
 import { usePagePositionCtx } from '../../../state/client/context/PagePosition.context';
-import useNextPagePrefetch from '../../../state/network/prefetch/useNextPagePrefetch';
+import { useNextPagePrefetch } from '../../../state/network/prefetch/useNextPagePrefetch';
 
 //#endregion Imports
 
 const BlogList = () => {
   const { setSelectedPost } = useSelectedPostCtx();
   const { pagePos } = usePagePositionCtx();
-  const { posts, isLoading, isError, error } = usePostsQuery(pagePos);
+  const { posts, isLoading, isError, error } = usePostsFetch(pagePos);
 
   useNextPagePrefetch(pagePos);
 

@@ -9,14 +9,16 @@ import BlogTitle from './list/BlogTitle';
 
 // state
 import { useSelectedPostCtx } from '../../state/client/context/SelectedPost.context';
-// import { usePostsQuery } from '../../state/network/usePostsQuery';
+import { useDeletePostMutate } from '../../state/network/mutate/useDeletePostMutate';
+import { useUpdatePostTitleMutate } from '../../state/network/mutate/useUpdatePostTitleMutate';
 // import { usePagePositionCtx } from '../../state/client/context/PagePosition.context';
 //#endregion imports
 
 const BlogContainer = () => {
   const { selectedPost } = useSelectedPostCtx();
+  const deletePostMutate = useDeletePostMutate();
+  const updatePostTitleMutate = useUpdatePostTitleMutate();
   // const { pagePos } = usePagePositionCtx();
-  // const { onClick_updateTitle, onClick_deletePost } = usePostsQuery(pagePos);
 
   return (
     <>
@@ -29,8 +31,8 @@ const BlogContainer = () => {
       {selectedPost && (
         <BlogItemDetail
           selectedPost={selectedPost}
-          // onClick_deletePost={onClick_deletePost}
-          // onClick_updateTitle={onClick_updateTitle}
+          deletePostMutate={deletePostMutate}
+          updatePostTitleMutate={updatePostTitleMutate}
         />
       )}
     </>

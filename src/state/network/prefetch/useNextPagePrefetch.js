@@ -4,7 +4,7 @@ import { useQueryClient } from 'react-query';
 import * as Network from '../../../web-api/posts.webapi';
 import { usePagePositionStatus } from '../../client/context/PagePosition.context';
 
-const useNextPagePrefetch = pagePos => {
+export const useNextPagePrefetch = pagePos => {
   const queryClient = useQueryClient();
   const { isMaxPagePos } = usePagePositionStatus();
 
@@ -23,5 +23,3 @@ const useNextPagePrefetch = pagePos => {
 useNextPagePrefetch.propTypes = {
   pagePos: PropTypes.number.isRequired
 };
-
-export default useNextPagePrefetch;
