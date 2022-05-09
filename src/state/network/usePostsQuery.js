@@ -1,9 +1,12 @@
-import * as Network from './Posts.network';
+import * as Network from '../../page/web-api/posts.webapi';
 import { useQuery } from 'react-query';
 import { useCallback } from 'react';
 
-export const usePostsQuery = () => {
-  const { data, isError, error, isLoading } = useQuery('posts', Network.fetchPosts);
+export const usePostsQuery = pagePos => {
+  const safePagePos = Math.max(0, pagePos);
+  const { data, isError, error, isLoading } = useQuery(['posts', safePagePos], () =>
+    Network.fetchPosts(pagePos)
+  );
 
   const onClick_updateTitle = useCallback(() => {}, []);
   const onClick_deletePost = useCallback(() => {}, []);

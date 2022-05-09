@@ -6,16 +6,23 @@ import Button from '../../../component/ui/Button';
 import { lg } from '../../../dbg/dbg';
 
 import BlogItemComments from './BlogItemComments';
+import { useCommentsQuery } from '../../../state/network/useCommentsQuery';
+import StdError from '../../../component/ui/StdError';
+import StdLoading from '../../../component/ui/StdLoading';
 
 const BlogItemDetail = ({
-  selectedPost,
-  onClick_updateTitle,
-  onClick_deletePost,
-  comments
+  selectedPost
+  // onClick_updateTitle,
+  // onClick_deletePost
 }) => {
+  const { comments, isLoading, isError, error } = useCommentsQuery(selectedPost?.id);
+
   if (!selectedPost) {
     return null;
   }
+
+  if (isLoading) return <StdLoading />;
+  if (isError) return <StdError error={error} />;
 
   const { title, body } = selectedPost;
   // prettyPrintSelectedPost(selectedPost);
@@ -30,14 +37,16 @@ const BlogItemDetail = ({
 
       {/* delete, update  */}
       <div className='flex flex-row'>
-        <Button text='Delete' additionalStyle='mr-3' onClick={onClick_deletePost} />
-        <Button text='Update Title' onClick={onClick_updateTitle} />
+        <Button text='Delete' additionalStyle='mr-3' />
+        <Button text='Update Title' />
       </div>
 
       {/* comments */}
       <BlogItemComments comments={comments} />
     </div>
   );
+  // onClick = { onClick_deletePost }
+  //onClick={onClick_updateTitle}
 };
 
 BlogItemDetail.propTypes = {

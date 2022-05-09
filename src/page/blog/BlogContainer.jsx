@@ -9,23 +9,14 @@ import BlogTitle from './list/BlogTitle';
 
 // state
 import { useSelectedPostCtx } from '../../state/client/context/SelectedPost.context';
-import { usePostsQuery } from '../../state/network/usePostsQuery';
-import { useCommentsQuery } from '../../state/network/useCommentsQuery';
+// import { usePostsQuery } from '../../state/network/usePostsQuery';
+// import { usePagePositionCtx } from '../../state/client/context/PagePosition.context';
 //#endregion imports
 
 const BlogContainer = () => {
   const { selectedPost } = useSelectedPostCtx();
-  const { onClick_updateTitle, onClick_deletePost } = usePostsQuery();
-  const { comments } = useCommentsQuery(selectedPost?.id);
-
-  const itemDetailJSX = selectedPost && (
-    <BlogItemDetail
-      selectedPost={selectedPost}
-      onClick_deletePost={onClick_deletePost}
-      onClick_updateTitle={onClick_updateTitle}
-      comments={comments}
-    />
-  );
+  // const { pagePos } = usePagePositionCtx();
+  // const { onClick_updateTitle, onClick_deletePost } = usePostsQuery(pagePos);
 
   return (
     <>
@@ -35,7 +26,13 @@ const BlogContainer = () => {
         <BlogList />
       </Layout>
 
-      {itemDetailJSX}
+      {selectedPost && (
+        <BlogItemDetail
+          selectedPost={selectedPost}
+          // onClick_deletePost={onClick_deletePost}
+          // onClick_updateTitle={onClick_updateTitle}
+        />
+      )}
     </>
   );
 };

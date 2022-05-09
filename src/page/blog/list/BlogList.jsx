@@ -8,17 +8,21 @@ import { usePostsQuery } from '../../../state/network/usePostsQuery';
 import StdLoading from '../../../component/ui/StdLoading';
 import StdError from '../../../component/ui/StdError';
 import BlogItem from '../item/BlogItem';
+import { usePagePositionCtx } from '../../../state/client/context/PagePosition.context';
 
 //#endregion Imports
 
 const BlogList = () => {
   const { setSelectedPost } = useSelectedPostCtx();
-  const { posts, isLoading, isError, error } = usePostsQuery();
+  const { pagePos } = usePagePositionCtx();
+  const { posts, isLoading, isError, error } = usePostsQuery(pagePos);
 
   if (isLoading) return <StdLoading />;
   if (isError) return <StdError error={error} />;
 
-  const blogItemsJSX = posts?.map(post => <BlogItem key={post.id} data={post} onClick={() => setSelectedPost(post)} />);
+  const blogItemsJSX = posts?.map(post => (
+    <BlogItem key={post.id} data={post} onClick={() => setSelectedPost(post)} />
+  ));
 
   return (
     <div className='w-screen py-4 pl-6'>
