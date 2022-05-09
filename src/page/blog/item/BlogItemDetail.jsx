@@ -9,6 +9,7 @@ import BlogItemComments from './BlogItemComments';
 import { useCommentsFetch } from '../../../state/network/fetch/useCommentsFetch';
 import StdError from '../../../component/ui/StdError';
 import StdLoading from '../../../component/ui/StdLoading';
+import { MutateHandler } from '../../../state/network/mutate';
 
 const BlogItemDetail = ({
   selectedPost,
@@ -43,17 +44,7 @@ const BlogItemDetail = ({
             additionalStyle='mr-3'
             onClick={() => deletePostMutate.mutate(selectedPost?.id)}
           />
-          <div className='mt-2'>
-            {deletePostMutate.isError && (
-              <p className='text-red-500'>Error from Delete!</p>
-            )}
-            {deletePostMutate.isLoading && (
-              <p className='text-purple-500'>Loading for Deletion!</p>
-            )}
-            {deletePostMutate.isSuccess && (
-              <p className='text-green-500'>Deleting Post was successful!</p>
-            )}
-          </div>
+          <MutateHandler mutator={deletePostMutate} additionalStyle='mt-2' />
         </div>
         <div className='flex flex-row'>
           <Button
@@ -62,17 +53,7 @@ const BlogItemDetail = ({
               updatePostTitleMutate.mutate(selectedPost?.id, 'updated name !!!!')
             }
           />
-          <div className='mt-2'>
-            {updatePostTitleMutate.isError && (
-              <p className='text-red-500'>Error from Delete!</p>
-            )}
-            {updatePostTitleMutate.isLoading && (
-              <p className='text-purple-500'>Loading for Deletion!</p>
-            )}
-            {updatePostTitleMutate.isSuccess && (
-              <p className='text-green-500'>Deleting Post was successful!</p>
-            )}
-          </div>
+          <MutateHandler mutator={updatePostTitleMutate} additionalStyle='mt-2' />
         </div>
       </div>
 
