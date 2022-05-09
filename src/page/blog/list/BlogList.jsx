@@ -20,13 +20,18 @@ const BlogList = () => {
   if (isLoading) return <StdLoading />;
   if (isError) return <StdError error={error} />;
 
-  const blogItemsJSX = posts?.map(post => (
-    <BlogItem key={post.id} data={post} onClick={() => setSelectedPost(post)} />
-  ));
-
   return (
     <div className='w-screen py-4 pl-6'>
-      <ul>{blogItemsJSX}</ul>
+      <ul>
+        {posts &&
+          posts.map(post => (
+            <BlogItem
+              key={post.id}
+              data={post}
+              onClick={() => setSelectedPost(post)}
+            />
+          ))}
+      </ul>
     </div>
   );
 };

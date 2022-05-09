@@ -31,11 +31,13 @@ import { useState, useCallback } from 'react';
 import constate from 'constate';
 
 export const [PagePositionContextProvider, usePagePositionCtx] = constate(() => {
-  const [pagePos, setPagePos] = useState(0);
+  const MAX_PAGE_POS = 10;
+  const [pagePos, setPagePos] = useState(1);
   const onClickNextPage = useCallback(() => setPagePos(x => x + 1), []);
   const onClickPreviousPage = useCallback(() => setPagePos(x => x - 1), []);
 
   return {
+    MAX_PAGE_POS,
     pagePos,
     setPagePos,
     onClickNextPage,
