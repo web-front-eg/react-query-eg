@@ -1,4 +1,4 @@
-import * as Network from '../../page/web-api/posts.webapi';
+import * as Network from '../../web-api/posts.webapi';
 import { useQuery } from 'react-query';
 
 export const useCommentsQuery = commentsId => {

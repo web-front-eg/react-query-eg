@@ -9,6 +9,7 @@ import StdLoading from '../../../component/ui/StdLoading';
 import StdError from '../../../component/ui/StdError';
 import BlogItem from '../item/BlogItem';
 import { usePagePositionCtx } from '../../../state/client/context/PagePosition.context';
+import useNextPagePrefetch from '../../../state/network/prefetch/useNextPagePrefetch';
 
 //#endregion Imports
 
@@ -16,6 +17,8 @@ const BlogList = () => {
   const { setSelectedPost } = useSelectedPostCtx();
   const { pagePos } = usePagePositionCtx();
   const { posts, isLoading, isError, error } = usePostsQuery(pagePos);
+
+  useNextPagePrefetch(pagePos);
 
   if (isLoading) return <StdLoading />;
   if (isError) return <StdError error={error} />;

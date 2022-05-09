@@ -1,11 +1,15 @@
-import * as Network from '../../page/web-api/posts.webapi';
+import * as Network from '../../web-api/posts.webapi';
 import { useQuery } from 'react-query';
 import { useCallback } from 'react';
 
 export const usePostsQuery = pagePos => {
   const safePagePos = Math.max(1, Math.min(10, pagePos));
-  const { data, isError, error, isLoading } = useQuery(['posts', safePagePos], () =>
-    Network.fetchPosts(pagePos)
+  const { data, isError, error, isLoading } = useQuery(
+    ['posts', safePagePos],
+    () => Network.fetchPosts(pagePos),
+    {
+      keepPreviousData: true
+    }
   );
 
   const onClick_updateTitle = useCallback(() => {}, []);

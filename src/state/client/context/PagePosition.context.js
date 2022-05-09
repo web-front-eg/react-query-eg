@@ -27,20 +27,43 @@
 
 // export default PagePositionContextWrapper;
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import constate from 'constate';
 
-export const [PagePositionContextProvider, usePagePositionCtx] = constate(() => {
-  const MAX_PAGE_POS = 10;
-  const [pagePos, setPagePos] = useState(1);
-  const onClickNextPage = useCallback(() => setPagePos(x => x + 1), []);
-  const onClickPreviousPage = useCallback(() => setPagePos(x => x - 1), []);
+const MIN_PAGE_POS = 1;
+const MAX_PAGE_POS = 10;
 
-  return {
-    MAX_PAGE_POS,
-    pagePos,
-    setPagePos,
-    onClickNextPage,
-    onClickPreviousPage
-  };
-});
+export const [
+  PagePositionContextProvider,
+  usePagePositionCtx,
+  usePagePositionStatus
+] = constate(
+  () => {
+    const [pagePos, setPagePos] = useState(1);
+
+    const reachedAtMaxPagePos = useMemo(() => pagePos >= MAX_PAGE_POS, [pagePos]);
+    const reachedAtMinPagePos = useMemo(() => pagePos <= MIN_PAGE_POS, [pagePos]);
+
+    const onClickNextPage = useCallback(() => setPagePos(x => x + 1), []);
+    const onClickPreviousPage = useCallback(() => setPagePos(x => x - 1), []);
+
+    return {
+      reachedAtMaxPagePos,
+      reachedAtMinPagePos,
+      pagePos,
+      setPagePos,
+      onClickNextPage,
+      onClickPreviousPage
+    };
+  },
+  from => ({
+    pagePos: from.pagePos,
+    setPagePos: from.setPagePos,
+    onClickNextPage: from.onClickNextPage,
+    onClickPreviousPage: from.onClickPreviousPage
+  }),
+  from => ({
+    reachedAtMaxPagePos: from.reachedAtMaxPagePos,
+    reachedAtMinPagePos: from.reachedAtMinPagePos
+  })
+);
